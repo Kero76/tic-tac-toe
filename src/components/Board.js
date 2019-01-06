@@ -1,14 +1,51 @@
 import React, { Component } from 'react';
 import Square from './Square';
+import Helper from './Helper';
 
 class Board extends Component {
+    //#region Constructors
 
-    renderSquare(i) {
-        return <Square value={i} />;
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            squares: Array(9).fill(null),
+            xIsNext: true,
+        }
     }
 
+    //#endregion
+
+    //#region Actions 
+
+    renderSquare(i) {
+        return <Square 
+            value={this.state.squares[i]} 
+            onClick={() => this.handleClick(i)}
+        />;
+    }
+
+    handleClick(i) {
+        const squares = this.state.squares.slice();
+
+        if (Helper.computeWinner(this.state.squares) || squares[i])
+            return null;
+
+        squares[i] = (this.state.xIsNext) ? 'X' : 'O';
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext,
+        });
+    }
+
+    //#endregion
+
+    //#region Render
+
     render() {
-        const status = 'Next player: X';
+        const symbol = (this.state.xIsNext) ? 'X' : 'O';
+        const winner = Helper.computeWinner(this.state.squares);
+        const status = (winner) ? 'Winner: ' + winner : 'Next player: ' + symbol;
 
         return (
           <div>
@@ -31,6 +68,8 @@ class Board extends Component {
           </div>
         );
     }
+
+    //#endregion
 }
 
 export default Board;

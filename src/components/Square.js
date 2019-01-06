@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Square extends Component {
-    render() {
-        return (
-            <button className="square">
-                {this.props.value}
-            </button>
-        );
-    };
+/**
+ * Function component which represent the a square in game.
+ * 
+ * @param {any} props 
+ *  The properties of the square.
+ */
+function Square(props) {
+    return (
+        <button
+            className="square" 
+            onClick={() => props.onClick()}
+        >
+            {props.value}
+        </button>
+    );
 }
 
 export default Square;
