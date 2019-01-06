@@ -10,7 +10,7 @@ class Board extends Component {
             onClick={() => this.props.onClick(i)}
         />;
     }
-
+    
     //#endregion
 
     //#region Render

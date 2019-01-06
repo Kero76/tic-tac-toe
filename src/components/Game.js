@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import Helper from './Helper';
+import Helper from '../utils/Helper';
 
 class Game extends Component {
     //#region Constructor
