@@ -39,10 +39,22 @@ class Game extends Component {
         });
     }
 
+    /**
+     * Return to precise step found in history.
+     * 
+     * @param {int} stepNumber 
+     *  The current step number.
+     */
     goToStep(stepNumber) {
+        let history = this.state.history;
+        if (stepNumber === 0) {
+            history.length = 1;
+        }
+
         this.setState({
-            stepNumber : stepNumber,
+            stepNumber: stepNumber,
             xIsNext: (stepNumber % 2) === 0,
+            history: history,
         });
     }
 
@@ -59,7 +71,6 @@ class Game extends Component {
         const winner = Helper.computeWinner(squares);
         const status = (winner) ? 'Winner: ' + winner : 'Next player: ' + symbol;
 
-        console.log(history);
         const moves = history.map((step, move) => {
             const desc = move 
                 ? 'Go to move #' + move 
