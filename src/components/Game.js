@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import Helper from './Helper';
+import Helper from '../utils/Helper';
 
 class Game extends Component {
     //#region Constructor
@@ -26,6 +26,11 @@ class Game extends Component {
         const current = history[history.length - 1];
         const squares = current.squares.slice();
 
+        // Check if the square is played.
+        if (squares[i] !== null) {
+            return;
+        }
+
         if (Helper.computeWinner(squares))
             return;
 
@@ -39,10 +44,24 @@ class Game extends Component {
         });
     }
 
+    /**
+     * Return to precise step found in history.
+     * If the new step is "Go to start game", 
+     * the history is completely reset and the new game is launch.
+     * 
+     * @param {int} stepNumber 
+     *  The current step number.
+     */
     goToStep(stepNumber) {
+        let history = this.state.history;
+        if (stepNumber === 0) {
+            history.length = 1;
+        }
+
         this.setState({
-            stepNumber : stepNumber,
+            stepNumber: stepNumber,
             xIsNext: (stepNumber % 2) === 0,
+            history: history,
         });
     }
 
@@ -59,7 +78,6 @@ class Game extends Component {
         const winner = Helper.computeWinner(squares);
         const status = (winner) ? 'Winner: ' + winner : 'Next player: ' + symbol;
 
-        console.log(history);
         const moves = history.map((step, move) => {
             const desc = move 
                 ? 'Go to move #' + move 

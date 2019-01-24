@@ -4,13 +4,19 @@ import Square from './Square';
 class Board extends Component {
     //#region Actions 
 
+    /**
+     * Render a square on board.
+     * 
+     * @param {int} i 
+     *  The number of the square on board.
+     */
     renderSquare(i) {
         return <Square 
             value={this.props.squares[i]} 
             onClick={() => this.props.onClick(i)}
         />;
     }
-
+    
     //#endregion
 
     //#region Render
