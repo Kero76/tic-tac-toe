@@ -26,6 +26,11 @@ class Game extends Component {
         const current = history[history.length - 1];
         const squares = current.squares.slice();
 
+        // Check if the square is played.
+        if (squares[i] !== null) {
+            return;
+        }
+
         if (Helper.computeWinner(squares))
             return;
 
@@ -41,6 +46,8 @@ class Game extends Component {
 
     /**
      * Return to precise step found in history.
+     * If the new step is "Go to start game", 
+     * the history is completely reset and the new game is launch.
      * 
      * @param {int} stepNumber 
      *  The current step number.
